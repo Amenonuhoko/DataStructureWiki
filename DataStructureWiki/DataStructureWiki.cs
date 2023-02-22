@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +23,9 @@ namespace DataStructureWiki
         static int row = 12;
         static int col = 4;
         string[,] DataTable = new string[row, col];
+        static string fileName = "definitions.dat";
+        int ptr = 0;
+        int index = 0;
         #endregion
 
 
@@ -35,23 +39,61 @@ namespace DataStructureWiki
         {
             LoadData();
         }
-
-        // TODO
         private void dataListView_Click(object sender, EventArgs e)
         {
-            var index = dataListView.SelectedIndices[0];
-
-            nameTextBox.Text = DataTable[index, 0];
-            categoryTextBox.Text = DataTable[index, 1];
-            structureTextBox.Text = DataTable[index, 2];
-            definitionTextBox.Text = DataTable[index, 3];
+            Click();
         }
-
+        private void BtnSave_Click(object sender, EventArgs e)
+        {
+            SaveData();
+        }
         #endregion
 
 
         #region Method
 
+        // TODO: Errors, Comments, clean up
+        private void Add()
+        {
+
+            if (ptr < row)
+            {
+                DataTable[ptr, 0] = nameTextBox.Text;
+                DataTable[ptr, 1] = categoryTextBox.Text;
+                if (radioButtonLinear.Checked)
+                {
+                    DataTable[ptr, 2] = "Linear";
+                }
+                else
+                {
+                    DataTable[ptr, 2] = "Non-Linear";
+                }
+                DataTable[ptr, 3] = definitionTextBox.Text;
+                ptr++;
+            }
+
+
+            DisplayData();
+        }
+
+        // TODO: Errors, comments, clean up, link to edit
+        private void Click()
+        {
+            index = dataListView.SelectedIndices[0];
+            
+            nameTextBox.Text = DataTable[index, 0];
+            categoryTextBox.Text = DataTable[index, 1];
+            if (DataTable[index, 2] == "Linear")
+            {
+                radioButtonLinear.Checked = true;
+            } else
+            {
+                radioButtonNonLinear.Checked = true;
+            }
+            definitionTextBox.Text = DataTable[index, 3];
+        }
+
+        // TODO: Errors, comments, clean up
         private void DisplayData()
         {
             dataListView.Items.Clear();
@@ -68,24 +110,45 @@ namespace DataStructureWiki
 
         }
 
-        // TODO
-        private void Add()
-        {
-            DataTable[0,0] = nameTextBox.Text;
-            DataTable[0,1] = categoryTextBox.Text;
-            DataTable[0,2] = structureTextBox.Text;
-            DataTable[0,3] = definitionTextBox.Text;
-
-            DisplayData();
-        }
-
         private void LoadData()
         {
+            if (File.Exists(fileName))
+            {
+                using (var stream = File.Open(fileName, FileMode.Open))
+                {
+                    using (var reader = new BinaryReader(stream, Encoding.UTF8, false))
+                    {
+                        for (int i = 0; i < row; i++)
+                        {
+                            DataTable[i, 0] = reader.ReadString();
+                        }
+                        reader.Close();
 
+                        DisplayData();
+                    }
+                }
+            }
         }
 
+        private void SaveData()
+        {
+            
+            using (var writer = new BinaryWriter(new FileStream(fileName, FileMode.OpenOrCreate)))
+            {
+                for (int i = 0; i < row; i++)
+                {
+                    writer.Write(DataTable[i, 0]);
+                    writer.Write(DataTable[i, 1]);
+                    writer.Write(DataTable[i, 2]);
+                    writer.Write(DataTable[i, 3]);
+                }
+                writer.Close();
+            }
+            
+        }
+
+
+
         #endregion
-
-
     }
 }
