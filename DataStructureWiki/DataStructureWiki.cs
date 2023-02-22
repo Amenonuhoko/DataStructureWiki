@@ -112,7 +112,7 @@ namespace DataStructureWiki
             }
 
             DataTable[row - 1, 0] = "";
-            DataTable[row - 1, 1] = "";
+            DataTable[row - 1, 1] = ""; 
             DataTable[row - 1, 2] = "";
             DataTable[row - 1, 3] = "";
 
