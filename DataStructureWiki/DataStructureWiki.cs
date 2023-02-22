@@ -35,6 +35,14 @@ namespace DataStructureWiki
         {
             Add();
         }
+        private void BtnDel_Click(object sender, EventArgs e)
+        {
+            Delete();
+        }
+        private void BtnEdit_Click(object sender, EventArgs e)
+        {
+            Edit();
+        }
         private void BtnLoad_Click(object sender, EventArgs e)
         {
             LoadData();
@@ -93,6 +101,27 @@ namespace DataStructureWiki
             definitionTextBox.Text = DataTable[index, 3];
         }
 
+        private void Delete()
+        {
+            for (int i = index; i < row - index - 1; i++)
+            {
+                DataTable[i, 0] = DataTable[i + 1, 0];
+                DataTable[i, 1] = DataTable[i + 1, 1];
+                DataTable[i, 2] = DataTable[i + 1, 2];
+                DataTable[i, 3] = DataTable[i + 1, 3];
+            }
+
+            DataTable[row - 1, 0] = "";
+            DataTable[row - 1, 1] = "";
+            DataTable[row - 1, 2] = "";
+            DataTable[row - 1, 3] = "";
+
+            
+
+            DisplayData();
+        }
+
+
         // TODO: Errors, comments, clean up
         private void DisplayData()
         {
@@ -110,6 +139,22 @@ namespace DataStructureWiki
 
         }
 
+        private void Edit()
+        {
+            DataTable[index, 0] = nameTextBox.Text;
+            DataTable[index, 1] = categoryTextBox.Text;
+            if (radioButtonLinear.Checked)
+            {
+                DataTable[index, 2] = "Linear";
+            }
+            else
+            {
+                DataTable[index, 2] = "Non-Linear";
+            }
+            DataTable[index, 3] = definitionTextBox.Text;
+
+            DisplayData();
+        }
         private void LoadData()
         {
             if (File.Exists(fileName))
@@ -121,6 +166,9 @@ namespace DataStructureWiki
                         for (int i = 0; i < row; i++)
                         {
                             DataTable[i, 0] = reader.ReadString();
+                            DataTable[i, 1] = reader.ReadString();
+                            DataTable[i, 2] = reader.ReadString();
+                            DataTable[i, 3] = reader.ReadString();
                         }
                         reader.Close();
 
@@ -149,6 +197,9 @@ namespace DataStructureWiki
 
 
 
+
         #endregion
+
+
     }
 }

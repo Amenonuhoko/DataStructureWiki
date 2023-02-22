@@ -198,6 +198,7 @@
             this.BtnEdit.TabIndex = 21;
             this.BtnEdit.Text = "Edit";
             this.BtnEdit.UseVisualStyleBackColor = true;
+            this.BtnEdit.Click += new System.EventHandler(this.BtnEdit_Click);
             // 
             // BtnDel
             // 
@@ -208,6 +209,7 @@
             this.BtnDel.TabIndex = 22;
             this.BtnDel.Text = "Delete";
             this.BtnDel.UseVisualStyleBackColor = true;
+            this.BtnDel.Click += new System.EventHandler(this.BtnDel_Click);
             // 
             // BtnSearch
             // 
