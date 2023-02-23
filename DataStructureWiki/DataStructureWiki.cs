@@ -60,45 +60,63 @@ namespace DataStructureWiki
 
         #region Method
 
-        // TODO: Errors, Comments, clean up
         private void Add()
         {
-
-            if (ptr < row)
+            // Check if fields are empty
+            if (String.IsNullOrEmpty(txtBoxName.Text) || String.IsNullOrEmpty(txtBoxCategory.Text) || String.IsNullOrEmpty(txtBoxDefinition.Text))
             {
-                DataTable[ptr, 0] = nameTextBox.Text;
-                DataTable[ptr, 1] = categoryTextBox.Text;
-                if (radioButtonLinear.Checked)
+                MessageBox.Show("Please Input all the required fields.");
+            } else
+            {
+                // Make sure the pointer is in the correct place
+                if (ptr < row)
                 {
-                    DataTable[ptr, 2] = "Linear";
-                }
-                else
+                    DataTable[ptr, 0] = txtBoxName.Text;
+                    DataTable[ptr, 1] = txtBoxCategory.Text;
+                    if (radioButtonLinear.Checked)
+                    {
+                        DataTable[ptr, 2] = "Linear";
+                    }
+                    else
+                    {
+                        DataTable[ptr, 2] = "Non-Linear";
+                    }
+                    DataTable[ptr, 3] = txtBoxDefinition.Text;
+                    ptr++;
+                } else // Check if there are more than 12
                 {
-                    DataTable[ptr, 2] = "Non-Linear";
+                    MessageBox.Show("Too many entries");
                 }
-                DataTable[ptr, 3] = definitionTextBox.Text;
-                ptr++;
+                // Refresh Data
+                DisplayData();
             }
-
-
-            DisplayData();
         }
 
         // TODO: Errors, comments, clean up, link to edit
         private void Click()
         {
+            // Add selected item to index
             index = dataListView.SelectedIndices[0];
             
-            nameTextBox.Text = DataTable[index, 0];
-            categoryTextBox.Text = DataTable[index, 1];
-            if (DataTable[index, 2] == "Linear")
+            // Check if empty
+            if (String.IsNullOrEmpty(DataTable[index, 0]))
             {
-                radioButtonLinear.Checked = true;
+                MessageBox.Show("This field is empty");
             } else
             {
-                radioButtonNonLinear.Checked = true;
+                txtBoxName.Text = DataTable[index, 0];
+                txtBoxCategory.Text = DataTable[index, 1];
+                if (DataTable[index, 2] == "Linear")
+                {
+                    radioButtonLinear.Checked = true;
+                }
+                else
+                {
+                    radioButtonNonLinear.Checked = true;
+                }
+                txtBoxDefinition.Text = DataTable[index, 3];
             }
-            definitionTextBox.Text = DataTable[index, 3];
+            
         }
 
         private void Delete()
@@ -141,8 +159,8 @@ namespace DataStructureWiki
 
         private void Edit()
         {
-            DataTable[index, 0] = nameTextBox.Text;
-            DataTable[index, 1] = categoryTextBox.Text;
+            DataTable[index, 0] = txtBoxName.Text;
+            DataTable[index, 1] = txtBoxCategory.Text;
             if (radioButtonLinear.Checked)
             {
                 DataTable[index, 2] = "Linear";
@@ -151,15 +169,22 @@ namespace DataStructureWiki
             {
                 DataTable[index, 2] = "Non-Linear";
             }
-            DataTable[index, 3] = definitionTextBox.Text;
+            DataTable[index, 3] = txtBoxDefinition.Text;
 
             DisplayData();
         }
         private void LoadData()
         {
-            if (File.Exists(fileName))
+            OpenFileDialog ofd = new OpenFileDialog()
             {
-                using (var stream = File.Open(fileName, FileMode.Open))
+                Title = "Data Structure Wiki",
+                Filter = "DAT files (*.dat)|*.dat|All files (*.*)|*.*",
+                InitialDirectory = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), @"..\"))
+            };
+            ofd.FileName = fileName;
+            if (File.Exists(fileName) && ofd.ShowDialog() == DialogResult.OK)
+            {
+                using (var stream = File.Open(ofd.FileName, FileMode.Open))
                 {
                     using (var reader = new BinaryReader(stream, Encoding.UTF8, false))
                     {
@@ -180,18 +205,32 @@ namespace DataStructureWiki
 
         private void SaveData()
         {
-            
-            using (var writer = new BinaryWriter(new FileStream(fileName, FileMode.OpenOrCreate)))
+            SaveFileDialog sfd = new SaveFileDialog()
             {
-                for (int i = 0; i < row; i++)
+                Title = "Data Structure Wiki",
+                Filter = "DAT files (*.dat)|*.dat|All files (*.*)|*.*",
+                InitialDirectory = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), @"..\"))
+            };
+            sfd.FileName = fileName;
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                using (Stream stream = File.Open(sfd.FileName, FileMode.Create))
+                using (var writer = new BinaryWriter(stream))
                 {
-                    writer.Write(DataTable[i, 0]);
-                    writer.Write(DataTable[i, 1]);
-                    writer.Write(DataTable[i, 2]);
-                    writer.Write(DataTable[i, 3]);
+                    for (int i = 0; i < row; i++)
+                    {
+                        writer.Write(DataTable[i, 0]);
+                        writer.Write(DataTable[i, 1]);
+                        writer.Write(DataTable[i, 2]);
+                        writer.Write(DataTable[i, 3]);
+                    }
+                    writer.Close();
+
+
+                    MessageBox.Show("Data Saved");
                 }
-                writer.Close();
             }
+            
             
         }
 

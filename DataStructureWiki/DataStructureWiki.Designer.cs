@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.nameTextBox = new System.Windows.Forms.TextBox();
+            this.txtBoxName = new System.Windows.Forms.TextBox();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.BtnLoad = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -41,7 +41,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.categoryTextBox = new System.Windows.Forms.TextBox();
+            this.txtBoxCategory = new System.Windows.Forms.TextBox();
             this.BtnSave = new System.Windows.Forms.Button();
             this.BtnAdd = new System.Windows.Forms.Button();
             this.BtnEdit = new System.Windows.Forms.Button();
@@ -50,18 +50,18 @@
             this.BtnSort = new System.Windows.Forms.Button();
             this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
             this.label5 = new System.Windows.Forms.Label();
-            this.definitionTextBox = new System.Windows.Forms.TextBox();
+            this.txtBoxDefinition = new System.Windows.Forms.TextBox();
             this.radioButtonLinear = new System.Windows.Forms.RadioButton();
             this.radioButtonNonLinear = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
-            // nameTextBox
+            // txtBoxName
             // 
-            this.nameTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nameTextBox.Location = new System.Drawing.Point(251, 115);
-            this.nameTextBox.Name = "nameTextBox";
-            this.nameTextBox.Size = new System.Drawing.Size(163, 31);
-            this.nameTextBox.TabIndex = 0;
+            this.txtBoxName.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBoxName.Location = new System.Drawing.Point(141, 113);
+            this.txtBoxName.Name = "txtBoxName";
+            this.txtBoxName.Size = new System.Drawing.Size(194, 31);
+            this.txtBoxName.TabIndex = 0;
             // 
             // textBox5
             // 
@@ -101,9 +101,9 @@
             this.dataDefinition});
             this.dataListView.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dataListView.HideSelection = false;
-            this.dataListView.Location = new System.Drawing.Point(439, 115);
+            this.dataListView.Location = new System.Drawing.Point(350, 113);
             this.dataListView.Name = "dataListView";
-            this.dataListView.Size = new System.Drawing.Size(336, 312);
+            this.dataListView.Size = new System.Drawing.Size(425, 337);
             this.dataListView.TabIndex = 12;
             this.dataListView.UseCompatibleStateImageBehavior = false;
             this.dataListView.View = System.Windows.Forms.View.Details;
@@ -159,13 +159,13 @@
             this.label4.TabIndex = 15;
             this.label4.Text = "Definition";
             // 
-            // categoryTextBox
+            // txtBoxCategory
             // 
-            this.categoryTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.categoryTextBox.Location = new System.Drawing.Point(251, 157);
-            this.categoryTextBox.Name = "categoryTextBox";
-            this.categoryTextBox.Size = new System.Drawing.Size(163, 31);
-            this.categoryTextBox.TabIndex = 17;
+            this.txtBoxCategory.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBoxCategory.Location = new System.Drawing.Point(141, 155);
+            this.txtBoxCategory.Name = "txtBoxCategory";
+            this.txtBoxCategory.Size = new System.Drawing.Size(194, 31);
+            this.txtBoxCategory.TabIndex = 17;
             // 
             // BtnSave
             // 
@@ -241,20 +241,20 @@
             this.label5.TabIndex = 25;
             this.label5.Text = "Data Structures";
             // 
-            // definitionTextBox
+            // txtBoxDefinition
             // 
-            this.definitionTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.definitionTextBox.Location = new System.Drawing.Point(251, 241);
-            this.definitionTextBox.Multiline = true;
-            this.definitionTextBox.Name = "definitionTextBox";
-            this.definitionTextBox.Size = new System.Drawing.Size(163, 186);
-            this.definitionTextBox.TabIndex = 26;
+            this.txtBoxDefinition.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBoxDefinition.Location = new System.Drawing.Point(141, 241);
+            this.txtBoxDefinition.Multiline = true;
+            this.txtBoxDefinition.Name = "txtBoxDefinition";
+            this.txtBoxDefinition.Size = new System.Drawing.Size(194, 209);
+            this.txtBoxDefinition.TabIndex = 26;
             // 
             // radioButtonLinear
             // 
             this.radioButtonLinear.AutoSize = true;
             this.radioButtonLinear.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonLinear.Location = new System.Drawing.Point(251, 198);
+            this.radioButtonLinear.Location = new System.Drawing.Point(141, 198);
             this.radioButtonLinear.Name = "radioButtonLinear";
             this.radioButtonLinear.Size = new System.Drawing.Size(71, 24);
             this.radioButtonLinear.TabIndex = 27;
@@ -266,7 +266,7 @@
             // 
             this.radioButtonNonLinear.AutoSize = true;
             this.radioButtonNonLinear.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonNonLinear.Location = new System.Drawing.Point(328, 198);
+            this.radioButtonNonLinear.Location = new System.Drawing.Point(230, 198);
             this.radioButtonNonLinear.Name = "radioButtonNonLinear";
             this.radioButtonNonLinear.Size = new System.Drawing.Size(105, 24);
             this.radioButtonNonLinear.TabIndex = 28;
@@ -278,10 +278,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(791, 448);
+            this.ClientSize = new System.Drawing.Size(791, 462);
             this.Controls.Add(this.radioButtonNonLinear);
             this.Controls.Add(this.radioButtonLinear);
-            this.Controls.Add(this.definitionTextBox);
+            this.Controls.Add(this.txtBoxDefinition);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.BtnSort);
             this.Controls.Add(this.BtnSearch);
@@ -289,7 +289,7 @@
             this.Controls.Add(this.BtnEdit);
             this.Controls.Add(this.BtnAdd);
             this.Controls.Add(this.BtnSave);
-            this.Controls.Add(this.categoryTextBox);
+            this.Controls.Add(this.txtBoxCategory);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -297,7 +297,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.BtnLoad);
             this.Controls.Add(this.textBox5);
-            this.Controls.Add(this.nameTextBox);
+            this.Controls.Add(this.txtBoxName);
             this.Name = "DataStructureWiki";
             this.Text = "Data Structure Wiki";
             this.ResumeLayout(false);
@@ -307,7 +307,7 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox nameTextBox;
+        private System.Windows.Forms.TextBox txtBoxName;
         private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.Button BtnLoad;
         private System.Windows.Forms.Label label1;
@@ -316,7 +316,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox categoryTextBox;
+        private System.Windows.Forms.TextBox txtBoxCategory;
         private System.Windows.Forms.Button BtnSave;
         private System.Windows.Forms.Button BtnAdd;
         private System.Windows.Forms.Button BtnEdit;
@@ -329,7 +329,7 @@
         private System.Windows.Forms.ColumnHeader dataCategory;
         private System.Windows.Forms.ColumnHeader dataStructure;
         private System.Windows.Forms.ColumnHeader dataDefinition;
-        private System.Windows.Forms.TextBox definitionTextBox;
+        private System.Windows.Forms.TextBox txtBoxDefinition;
         private System.Windows.Forms.RadioButton radioButtonLinear;
         private System.Windows.Forms.RadioButton radioButtonNonLinear;
     }
