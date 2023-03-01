@@ -20,7 +20,7 @@ namespace DataStructureWiki
             InitializeComponent();
         }
 
-        #region Variable
+        #region Variables
         static int row = 12;
         static int col = 4;
         string[,] DataTable = new string[row, col];
@@ -30,11 +30,14 @@ namespace DataStructureWiki
         #endregion
 
 
-        #region Event 
-
+        #region Events
         private void BtnAdd_Click(object sender, EventArgs e)
         {
             Add();
+        }
+        private void BtnClear_Click(object sender, EventArgs e)
+        {
+            ClearFields();
         }
         private void BtnDel_Click(object sender, EventArgs e)
         {
@@ -48,24 +51,23 @@ namespace DataStructureWiki
         {
             LoadData();
         }
-        private void dataListView_Click(object sender, EventArgs e)
-        {
-            ClickData();
-        }
         private void BtnSave_Click(object sender, EventArgs e)
         {
             SaveData();
         }
-
         private void BtnSort_Click(object sender, EventArgs e)
         {
             BubbleSort();
+            DisplayData();
+        }
+        private void dataListView_Click(object sender, EventArgs e)
+        {
+            ClickData();
         }
         #endregion
 
 
         #region Method
-
         private void Add()
         {
             // Check if fields are empty
@@ -74,7 +76,7 @@ namespace DataStructureWiki
                 MessageBox.Show("Please Input all the required fields.");
             } else
             {
-                // Make sure the pointer is in the correct place
+                // Make sure the pointer is not out of bounds
                 if (ptr < row)
                 {
                     DataTable[ptr, 0] = txtBoxName.Text;
@@ -84,12 +86,13 @@ namespace DataStructureWiki
                     ptr++;
                     toolStripStatusLabel1.Text = ptr.ToString();
 
-                } // Check if there are more than 12
-                else 
+                }
+                // Check if there are more than 12
+                else
                 {
                     MessageBox.Show("Too many entries");
                 }
-                // Clear everything
+                // Clear fields
                 ClearFields();
                 // Focus
                 txtBoxName.Focus();
@@ -99,12 +102,16 @@ namespace DataStructureWiki
         }
         private void BubbleSort()
         {
+            // Loop through outer set of data
             for (int i = 0; i < row; i++)
             {
+                // Loop through inner set of data
                 for (int j = 0; j < row - 1; j++)
                 {
-                    if (String.CompareOrdinal(DataTable[j, 0], DataTable[j + 1, 0]) < 0)
+                    // Check if selected item is less value than the one next to it
+                    if (DataTable[j, 0].CompareTo(DataTable[j + 1, 0]) > 0)
                     {
+                        // Swap if true
                         Swap(j);
                     }
                 }
@@ -112,6 +119,7 @@ namespace DataStructureWiki
         }
         private void ClearFields()
         {
+            // Clear all fields
             txtBoxName.Clear();
             txtBoxCategory.Clear();
             radioButtonLinear.Checked = false;
@@ -122,7 +130,7 @@ namespace DataStructureWiki
         {
             // Add selected item to index
             index = dataListView.SelectedIndices[0];
-            toolStripStatusLabel1.Text = DataTable[index, 0] + " " + index;
+            // Check if the entry is empty or if index is in the wrong place
             if (!String.IsNullOrEmpty(DataTable[index, 0]) && index > -1)
             {
                 // Fill boxes with data
@@ -134,33 +142,36 @@ namespace DataStructureWiki
                 txtBoxDefinition.Text = DataTable[index, 3];
             }            
         }
-
         private void Delete()
         {
-            if (index != -1 && DataTable[index, 0] != null)
+            // Check if index is in the correct place
+            if (index > -1)
             {
-                // Set all data to comparable value
-                DataTable[index, 0] = "~";
-                DataTable[index, 1] = "~";
-                DataTable[index, 2] = "~";
-                DataTable[index, 3] = "~";
-                // Reduce pointer
-                ptr--;
-                index = -1;
-                BubbleSort();
-                DisplayData();
+                // Show confirmation
+                DialogResult confirm = MessageBox.Show("Confirm Delete?", "Delete", MessageBoxButtons.YesNo);
+                if (confirm == DialogResult.Yes)
+                {
+                    // Set all data to comparable value
+                    DataTable[index, 0] = "zzz";
+                    DataTable[index, 1] = "zzz";
+                    DataTable[index, 2] = "zzz";
+                    DataTable[index, 3] = "zzz";
+                    // Reduce pointer
+                    ptr--;
+                    BubbleSort();
+                    DisplayData();
+                }
             }
-
-            
         }
-
         private void DisplayData()
         {
             // Clear list
             dataListView.Items.Clear();
+            // Loop through data
             for (int i = 0; i < row; i++)
             {
-                if (DataTable[i, 0] != "" && DataTable[i, 0] != null)
+                // Hide entries that are deleted or empty
+                if (DataTable[i, 0] != "zzz" && DataTable[i, 0] != null)
                 {
                     // Create object to fill
                     ListViewItem data1 = new ListViewItem(DataTable[i, 0]);
@@ -169,67 +180,73 @@ namespace DataStructureWiki
                     data1.SubItems.Add(DataTable[i, 3]);
                     // Fill into box
                     dataListView.Items.Add(data1);
-                }            
+                }
             }
         }
-
         private void Edit()
         {
-            int i = index;
-            toolStripStatusLabel1.Text = index.ToString();
-            DataTable[i, 0] = txtBoxName.Text;
-            DataTable[i, 1] = txtBoxCategory.Text;
-            if (radioButtonLinear.Checked) DataTable[i, 2] = "Linear";
-            else DataTable[i, 2] = "Non-Linear";
-
-            DataTable[i, 3] = txtBoxDefinition.Text;
-
-            DisplayData();
+            // Error trappings
+            if (!String.IsNullOrEmpty(txtBoxName.Text) || !String.IsNullOrEmpty(txtBoxCategory.Text) || !String.IsNullOrEmpty(txtBoxDefinition.Text))
+            {
+                DataTable[index, 0] = txtBoxName.Text;
+                DataTable[index, 1] = txtBoxCategory.Text;
+                if (radioButtonLinear.Checked) DataTable[index, 2] = "Linear";
+                else DataTable[index, 2] = "Non-Linear";
+                DataTable[index, 3] = txtBoxDefinition.Text;
+                // Refresh
+                DisplayData();
+            }
         }
         private void LoadData()
         {
+            // File dialog config
             OpenFileDialog ofd = new OpenFileDialog()
             {
                 Title = "Data Structure Wiki",
                 Filter = "DAT files (*.dat)|*.dat|All files (*.*)|*.*",
                 InitialDirectory = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), @"..\"))
             };
+            // Set filename
             ofd.FileName = fileName;
             if (File.Exists(fileName) && ofd.ShowDialog() == DialogResult.OK)
             {
                 using (var stream = File.Open(ofd.FileName, FileMode.Open))
+                using (var reader = new BinaryReader(stream, Encoding.UTF8, false))
                 {
-                    using (var reader = new BinaryReader(stream, Encoding.UTF8, false))
+                    // Loop through and read entries
+                    for (int i = 0; i < row; i++)
                     {
-                        for (int i = 0; i < row; i++)
-                        {
-                            DataTable[i, 0] = reader.ReadString();
-                            DataTable[i, 1] = reader.ReadString();
-                            DataTable[i, 2] = reader.ReadString();
-                            DataTable[i, 3] = reader.ReadString();
-                        }
-                        reader.Close();
-
-                        DisplayData();
+                        DataTable[i, 0] = reader.ReadString();
+                        DataTable[i, 1] = reader.ReadString();
+                        DataTable[i, 2] = reader.ReadString();
+                        DataTable[i, 3] = reader.ReadString();
+                        ptr++;
                     }
+                    reader.Close();
+                    // Refresh
+                    DisplayData();
+                    // Display success
+                    MessageBox.Show("Load Successful");
                 }
             }
         }
-
         private void SaveData()
         {
+            // File dialog config
             SaveFileDialog sfd = new SaveFileDialog()
             {
                 Title = "Data Structure Wiki",
                 Filter = "DAT files (*.dat)|*.dat|All files (*.*)|*.*",
                 InitialDirectory = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), @"..\"))
             };
+            // Set filename
             sfd.FileName = fileName;
             if (sfd.ShowDialog() == DialogResult.OK)
             {
                 using (Stream stream = File.Open(sfd.FileName, FileMode.Create))
                 using (var writer = new BinaryWriter(stream))
                 {
+                    // Loop through 4 sets of data for each column
                     for (int i = 0; i < row; i++)
                     {
                         writer.Write(DataTable[i, 0]);
@@ -238,29 +255,23 @@ namespace DataStructureWiki
                         writer.Write(DataTable[i, 3]);
                     }
                     writer.Close();
-
-
-                    MessageBox.Show("Data Saved");
+                    // Display success
+                    MessageBox.Show("Save Successful");
                 }
             }
         }
-
         private void Swap(int j)
         {
-            for (int x = 0; x < col - 1; x++)
+            // Swap for every element in the columns
+            for (int x = 0; x < col; x++)
             {
                 string temp = DataTable[j + 1, x];
                 DataTable[j + 1, x] = DataTable[j, x];
                 DataTable[j, x] = temp;
             }
         }
-
-
-
-
-
         #endregion
 
-
+        
     }
 }

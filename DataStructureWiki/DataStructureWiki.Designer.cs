@@ -53,9 +53,7 @@
             this.txtBoxDefinition = new System.Windows.Forms.TextBox();
             this.radioButtonLinear = new System.Windows.Forms.RadioButton();
             this.radioButtonNonLinear = new System.Windows.Forms.RadioButton();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.statusStrip1.SuspendLayout();
+            this.BtnClear = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtBoxName
@@ -278,28 +276,24 @@
             this.radioButtonNonLinear.Text = "Non-Linear";
             this.radioButtonNonLinear.UseVisualStyleBackColor = true;
             // 
-            // statusStrip1
+            // BtnClear
             // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 440);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(791, 22);
-            this.statusStrip1.TabIndex = 29;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
-            this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
+            this.BtnClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnClear.Location = new System.Drawing.Point(251, 67);
+            this.BtnClear.Name = "BtnClear";
+            this.BtnClear.Size = new System.Drawing.Size(84, 30);
+            this.BtnClear.TabIndex = 30;
+            this.BtnClear.Text = "Clear";
+            this.BtnClear.UseMnemonic = false;
+            this.BtnClear.UseVisualStyleBackColor = true;
+            this.BtnClear.Click += new System.EventHandler(this.BtnClear_Click);
             // 
             // DataStructureWiki
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(791, 462);
-            this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.BtnClear);
             this.Controls.Add(this.radioButtonNonLinear);
             this.Controls.Add(this.radioButtonLinear);
             this.Controls.Add(this.txtBoxDefinition);
@@ -321,8 +315,6 @@
             this.Controls.Add(this.txtBoxName);
             this.Name = "DataStructureWiki";
             this.Text = "Data Structure Wiki";
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -355,8 +347,7 @@
         private System.Windows.Forms.TextBox txtBoxDefinition;
         private System.Windows.Forms.RadioButton radioButtonLinear;
         private System.Windows.Forms.RadioButton radioButtonNonLinear;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.Button BtnClear;
     }
 }
 
