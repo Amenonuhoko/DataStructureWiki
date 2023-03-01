@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -25,7 +26,7 @@ namespace DataStructureWiki
         string[,] DataTable = new string[row, col];
         static string fileName = "definitions.dat";
         int ptr = 0;
-        int index = 0;
+        int index = -1;
         #endregion
 
 
@@ -49,11 +50,16 @@ namespace DataStructureWiki
         }
         private void dataListView_Click(object sender, EventArgs e)
         {
-            Click();
+            ClickData();
         }
         private void BtnSave_Click(object sender, EventArgs e)
         {
             SaveData();
+        }
+
+        private void BtnSort_Click(object sender, EventArgs e)
+        {
+            BubbleSort();
         }
         #endregion
 
@@ -73,103 +79,110 @@ namespace DataStructureWiki
                 {
                     DataTable[ptr, 0] = txtBoxName.Text;
                     DataTable[ptr, 1] = txtBoxCategory.Text;
-                    if (radioButtonLinear.Checked)
-                    {
-                        DataTable[ptr, 2] = "Linear";
-                    }
-                    else
-                    {
-                        DataTable[ptr, 2] = "Non-Linear";
-                    }
+                    DataTable[ptr, 2] = radioButtonLinear.Checked == true ? "Linear" : "Non-Linear";
                     DataTable[ptr, 3] = txtBoxDefinition.Text;
                     ptr++;
-                } else // Check if there are more than 12
+                    toolStripStatusLabel1.Text = ptr.ToString();
+
+                } // Check if there are more than 12
+                else 
                 {
                     MessageBox.Show("Too many entries");
                 }
+                // Clear everything
+                ClearFields();
+                // Focus
+                txtBoxName.Focus();
                 // Refresh Data
                 DisplayData();
             }
         }
-
-        // TODO: Errors, comments, clean up, link to edit
-        private void Click()
+        private void BubbleSort()
+        {
+            for (int i = 0; i < row; i++)
+            {
+                for (int j = 0; j < row - 1; j++)
+                {
+                    if (String.CompareOrdinal(DataTable[j, 0], DataTable[j + 1, 0]) < 0)
+                    {
+                        Swap(j);
+                    }
+                }
+            }
+        }
+        private void ClearFields()
+        {
+            txtBoxName.Clear();
+            txtBoxCategory.Clear();
+            radioButtonLinear.Checked = false;
+            radioButtonNonLinear.Checked = false;
+            txtBoxDefinition.Clear();
+        }
+        private void ClickData()
         {
             // Add selected item to index
             index = dataListView.SelectedIndices[0];
-            
-            // Check if empty
-            if (String.IsNullOrEmpty(DataTable[index, 0]))
+            toolStripStatusLabel1.Text = DataTable[index, 0] + " " + index;
+            if (!String.IsNullOrEmpty(DataTable[index, 0]) && index > -1)
             {
-                MessageBox.Show("This field is empty");
-            } else
-            {
+                // Fill boxes with data
                 txtBoxName.Text = DataTable[index, 0];
                 txtBoxCategory.Text = DataTable[index, 1];
-                if (DataTable[index, 2] == "Linear")
-                {
-                    radioButtonLinear.Checked = true;
-                }
-                else
-                {
-                    radioButtonNonLinear.Checked = true;
-                }
+                // Check radio buttons
+                if (DataTable[index, 2] == "Linear") radioButtonLinear.Checked = true;
+                else radioButtonNonLinear.Checked = true;
                 txtBoxDefinition.Text = DataTable[index, 3];
-            }
-            
+            }            
         }
 
         private void Delete()
         {
-            for (int i = index; i < row - index - 1; i++)
+            if (index != -1 && DataTable[index, 0] != null)
             {
-                DataTable[i, 0] = DataTable[i + 1, 0];
-                DataTable[i, 1] = DataTable[i + 1, 1];
-                DataTable[i, 2] = DataTable[i + 1, 2];
-                DataTable[i, 3] = DataTable[i + 1, 3];
+                // Set all data to comparable value
+                DataTable[index, 0] = "~";
+                DataTable[index, 1] = "~";
+                DataTable[index, 2] = "~";
+                DataTable[index, 3] = "~";
+                // Reduce pointer
+                ptr--;
+                index = -1;
+                BubbleSort();
+                DisplayData();
             }
-
-            DataTable[row - 1, 0] = "";
-            DataTable[row - 1, 1] = ""; 
-            DataTable[row - 1, 2] = "";
-            DataTable[row - 1, 3] = "";
 
             
-
-            DisplayData();
         }
 
-
-        // TODO: Errors, comments, clean up
         private void DisplayData()
         {
+            // Clear list
             dataListView.Items.Clear();
-
             for (int i = 0; i < row; i++)
             {
-                ListViewItem data1 = new ListViewItem(DataTable[i, 0]);
-                data1.SubItems.Add(DataTable[i, 1]);
-                data1.SubItems.Add(DataTable[i, 2]);
-                data1.SubItems.Add(DataTable[i, 3]);
-
-                dataListView.Items.Add(data1);
+                if (DataTable[i, 0] != "" && DataTable[i, 0] != null)
+                {
+                    // Create object to fill
+                    ListViewItem data1 = new ListViewItem(DataTable[i, 0]);
+                    data1.SubItems.Add(DataTable[i, 1]);
+                    data1.SubItems.Add(DataTable[i, 2]);
+                    data1.SubItems.Add(DataTable[i, 3]);
+                    // Fill into box
+                    dataListView.Items.Add(data1);
+                }            
             }
-
         }
 
         private void Edit()
         {
-            DataTable[index, 0] = txtBoxName.Text;
-            DataTable[index, 1] = txtBoxCategory.Text;
-            if (radioButtonLinear.Checked)
-            {
-                DataTable[index, 2] = "Linear";
-            }
-            else
-            {
-                DataTable[index, 2] = "Non-Linear";
-            }
-            DataTable[index, 3] = txtBoxDefinition.Text;
+            int i = index;
+            toolStripStatusLabel1.Text = index.ToString();
+            DataTable[i, 0] = txtBoxName.Text;
+            DataTable[i, 1] = txtBoxCategory.Text;
+            if (radioButtonLinear.Checked) DataTable[i, 2] = "Linear";
+            else DataTable[i, 2] = "Non-Linear";
+
+            DataTable[i, 3] = txtBoxDefinition.Text;
 
             DisplayData();
         }
@@ -230,9 +243,18 @@ namespace DataStructureWiki
                     MessageBox.Show("Data Saved");
                 }
             }
-            
-            
         }
+
+        private void Swap(int j)
+        {
+            for (int x = 0; x < col - 1; x++)
+            {
+                string temp = DataTable[j + 1, x];
+                DataTable[j + 1, x] = DataTable[j, x];
+                DataTable[j, x] = temp;
+            }
+        }
+
 
 
 
