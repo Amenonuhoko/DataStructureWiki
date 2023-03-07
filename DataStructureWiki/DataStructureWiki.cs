@@ -20,6 +20,7 @@ namespace DataStructureWiki
             InitializeComponent();
         }
 
+        // TODO COMMENTS
         #region Variables
         static int row = 12;
         static int col = 4;
@@ -29,7 +30,7 @@ namespace DataStructureWiki
         int index = -1;
         #endregion
 
-
+        // TODO COMMENTS
         #region Events
         private void BtnAdd_Click(object sender, EventArgs e)
         {
@@ -55,6 +56,10 @@ namespace DataStructureWiki
         {
             SaveData();
         }
+        private void BtnSearch_Click(object sender, EventArgs e)
+        {
+            BinarySearch();
+        }
         private void BtnSort_Click(object sender, EventArgs e)
         {
             BubbleSort();
@@ -66,7 +71,7 @@ namespace DataStructureWiki
         }
         #endregion
 
-
+        // TODO COMMENTS ON METHODS
         #region Method
         private void Add()
         {
@@ -84,7 +89,7 @@ namespace DataStructureWiki
                     DataTable[ptr, 2] = radioButtonLinear.Checked == true ? "Linear" : "Non-Linear";
                     DataTable[ptr, 3] = txtBoxDefinition.Text;
                     ptr++;
-                    toolStripStatusLabel1.Text = ptr.ToString();
+                    
 
                 }
                 // Check if there are more than 12
@@ -100,6 +105,48 @@ namespace DataStructureWiki
                 DisplayData();
             }
         }
+        // TODO
+        private void BinarySearch()
+        {
+            if (!String.IsNullOrEmpty(txtBoxSearch.Text)) {
+                BubbleSort();
+                DisplayData();
+                
+                string target = txtBoxSearch.Text;
+                int first = 0;
+                int last = row;
+                bool found = false;
+                int position = -1;
+
+                while (!found && first < last)
+                {
+
+                    int middle = (first + last) / 2;
+
+                    if (DataTable[middle, 0].ToLower() == target)
+                    {
+                        found = true;
+                        position = middle;
+                        dataListView.Items[position].Selected = true;
+                        dataListView.Items[position].Focused = true;
+
+
+                        Debug.WriteLine("here");
+
+
+                    }
+                    else if (String.CompareOrdinal(DataTable[middle, 0], target) < 0)
+                    {
+                        last = middle;
+
+                    }
+                    else if (String.CompareOrdinal(DataTable[middle, 0], target) > 0)
+                    {
+                        first = middle;
+                    }
+                }
+            }
+        }
         private void BubbleSort()
         {
             // Loop through outer set of data
@@ -109,7 +156,8 @@ namespace DataStructureWiki
                 for (int j = 0; j < row - 1; j++)
                 {
                     // Check if selected item is less value than the one next to it
-                    if (DataTable[j, 0].CompareTo(DataTable[j + 1, 0]) > 0)
+                    if (String.CompareOrdinal(DataTable[j, 0], DataTable[j + 1, 0]) > 0)
+                        
                     {
                         // Swap if true
                         Swap(j);
@@ -272,6 +320,6 @@ namespace DataStructureWiki
         }
         #endregion
 
-        
+
     }
 }

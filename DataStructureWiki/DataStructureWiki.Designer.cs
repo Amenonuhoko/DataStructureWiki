@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.txtBoxName = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.txtBoxSearch = new System.Windows.Forms.TextBox();
             this.BtnLoad = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.dataListView = new System.Windows.Forms.ListView();
@@ -64,13 +64,13 @@
             this.txtBoxName.Size = new System.Drawing.Size(194, 31);
             this.txtBoxName.TabIndex = 0;
             // 
-            // textBox5
+            // txtBoxSearch
             // 
-            this.textBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox5.Location = new System.Drawing.Point(542, 70);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(143, 31);
-            this.textBox5.TabIndex = 4;
+            this.txtBoxSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBoxSearch.Location = new System.Drawing.Point(542, 70);
+            this.txtBoxSearch.Name = "txtBoxSearch";
+            this.txtBoxSearch.Size = new System.Drawing.Size(143, 31);
+            this.txtBoxSearch.TabIndex = 4;
             // 
             // BtnLoad
             // 
@@ -221,6 +221,7 @@
             this.BtnSearch.TabIndex = 23;
             this.BtnSearch.Text = "Search";
             this.BtnSearch.UseVisualStyleBackColor = true;
+            this.BtnSearch.Click += new System.EventHandler(this.BtnSearch_Click);
             // 
             // BtnSort
             // 
@@ -311,7 +312,7 @@
             this.Controls.Add(this.dataListView);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.BtnLoad);
-            this.Controls.Add(this.textBox5);
+            this.Controls.Add(this.txtBoxSearch);
             this.Controls.Add(this.txtBoxName);
             this.Name = "DataStructureWiki";
             this.Text = "Data Structure Wiki";
@@ -323,7 +324,7 @@
         #endregion
 
         private System.Windows.Forms.TextBox txtBoxName;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox txtBoxSearch;
         private System.Windows.Forms.Button BtnLoad;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ListView dataListView;
