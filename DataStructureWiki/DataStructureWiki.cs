@@ -108,42 +108,46 @@ namespace DataStructureWiki
         // TODO
         private void BinarySearch()
         {
-            if (!String.IsNullOrEmpty(txtBoxSearch.Text)) {
+            if (!String.IsNullOrEmpty(txtBoxSearch.Text))
+            {
                 BubbleSort();
                 DisplayData();
-                
+
                 string target = txtBoxSearch.Text;
                 int first = 0;
-                int last = row;
-                bool found = false;
+                int last = row - 1;
                 int position = -1;
 
-                while (!found && first < last)
+                while (first <= last)
                 {
-
                     int middle = (first + last) / 2;
+                    Debug.WriteLine("first: " + first);
+                    Debug.WriteLine("last: " + last);
+                    Debug.WriteLine(middle);
 
-                    if (DataTable[middle, 0].ToLower() == target)
+                    if (DataTable[middle, 0] == target)
                     {
-                        found = true;
                         position = middle;
                         dataListView.Items[position].Selected = true;
                         dataListView.Items[position].Focused = true;
 
-
                         Debug.WriteLine("here");
 
-
+                        break;
                     }
                     else if (String.CompareOrdinal(DataTable[middle, 0], target) < 0)
                     {
-                        last = middle;
-
+                        first = middle + 1;
                     }
                     else if (String.CompareOrdinal(DataTable[middle, 0], target) > 0)
                     {
-                        first = middle;
+                        last = middle - 1;
                     }
+                }
+
+                if (position == -1)
+                {
+                    MessageBox.Show("Does not exist");
                 }
             }
         }
