@@ -35,8 +35,6 @@
             this.dataListView = new System.Windows.Forms.ListView();
             this.dataName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.dataCategory = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.dataStructure = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.dataDefinition = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -97,9 +95,7 @@
             // 
             this.dataListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.dataName,
-            this.dataCategory,
-            this.dataStructure,
-            this.dataDefinition});
+            this.dataCategory});
             this.dataListView.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dataListView.HideSelection = false;
             this.dataListView.Location = new System.Drawing.Point(350, 113);
@@ -113,22 +109,12 @@
             // dataName
             // 
             this.dataName.Text = "Name";
-            this.dataName.Width = 77;
+            this.dataName.Width = 188;
             // 
             // dataCategory
             // 
             this.dataCategory.Text = "Category";
-            this.dataCategory.Width = 84;
-            // 
-            // dataStructure
-            // 
-            this.dataStructure.Text = "Structure";
-            this.dataStructure.Width = 79;
-            // 
-            // dataDefinition
-            // 
-            this.dataDefinition.Text = "Definition";
-            this.dataDefinition.Width = 92;
+            this.dataCategory.Width = 187;
             // 
             // label2
             // 
@@ -343,8 +329,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ColumnHeader dataName;
         private System.Windows.Forms.ColumnHeader dataCategory;
-        private System.Windows.Forms.ColumnHeader dataStructure;
-        private System.Windows.Forms.ColumnHeader dataDefinition;
         private System.Windows.Forms.TextBox txtBoxDefinition;
         private System.Windows.Forms.RadioButton radioButtonLinear;
         private System.Windows.Forms.RadioButton radioButtonNonLinear;

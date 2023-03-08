@@ -134,14 +134,17 @@ namespace DataStructureWiki
                 {
                     int middle = (first + last) / 2;
                     // If target is found
-                    if (DataTable[middle, 0] == target)
+                    if (String.CompareOrdinal(DataTable[middle, 0],target) == 0)
                     {
                         // Change position and highlight the entry
                         position = middle;
+                        index = position;
                         dataListView.SelectedItems.Clear();
                         dataListView.Items[position].Selected = true;
                         dataListView.Items[position].Focused = true;
                         dataListView.Select();
+                        // Add into fields
+                        FillData(position);
                         // Exit out of loop
                         break;
                     }
@@ -158,6 +161,7 @@ namespace DataStructureWiki
                 // If position has not changed then it does not exist
                 if (position == -1)
                 {
+                    txtBoxSearch.Clear();
                     MessageBox.Show("Does not exist", "Warning", 0, MessageBoxIcon.Warning);
                 }
             }
@@ -203,13 +207,7 @@ namespace DataStructureWiki
             // Check if the entry is empty or if index is in the wrong place
             if (!String.IsNullOrEmpty(DataTable[index, 0]) && index > -1)
             {
-                // Fill boxes with data
-                txtBoxName.Text = DataTable[index, 0];
-                txtBoxCategory.Text = DataTable[index, 1];
-                // Check radio buttons
-                if (DataTable[index, 2] == "Linear") radioButtonLinear.Checked = true;
-                else radioButtonNonLinear.Checked = true;
-                txtBoxDefinition.Text = DataTable[index, 3];
+                FillData(index);
             }            
         }
 
@@ -231,6 +229,10 @@ namespace DataStructureWiki
                     DataTable[index, 3] = "zzz";
                     // Reduce pointer
                     ptr--;
+                    // Clear 
+                    ClearFields();
+                    // Focus
+                    txtBoxName.Focus();
                     // Sort after
                     BubbleSort();
                     DisplayData();
@@ -275,7 +277,22 @@ namespace DataStructureWiki
                 DataTable[index, 3] = txtBoxDefinition.Text;
                 // Refresh
                 DisplayData();
+                // Clear
+                ClearFields();
+                txtBoxName.Focus();
             }
+        }
+
+        // Fills fields with selected data
+        private void FillData(int index)
+        {
+            // Fill boxes with data
+            txtBoxName.Text = DataTable[index, 0];
+            txtBoxCategory.Text = DataTable[index, 1];
+            // Check radio buttons
+            if (DataTable[index, 2] == "Linear") radioButtonLinear.Checked = true;
+            else radioButtonNonLinear.Checked = true;
+            txtBoxDefinition.Text = DataTable[index, 3];
         }
 
         // 9.11	Create a LOAD button that will read the information from a binary file called definitions.dat into the 2D array, ensure the user has the option to select an alternative file. Use a file stream and BinaryReader to complete this task.
