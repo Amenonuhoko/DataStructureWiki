@@ -39,7 +39,7 @@ namespace DataStructureWiki
         #endregion
 
         #region Events
-        // Events that call the functions
+        // Events that call the methods
         private void BtnAdd_Click(object sender, EventArgs e)
         {
             Add();
@@ -158,7 +158,7 @@ namespace DataStructureWiki
                 // If position has not changed then it does not exist
                 if (position == -1)
                 {
-                    MessageBox.Show("Does not exist");
+                    MessageBox.Show("Does not exist", "Warning", 0, MessageBoxIcon.Warning);
                 }
             }
         }
