@@ -125,7 +125,7 @@ namespace DataStructureWiki
                 BubbleSort();
                 DisplayData();
                 // Create the target to search
-                string target = txtBoxSearch.Text;
+                string target = txtBoxSearch.Text.ToLower();
                 int first = 0;
                 int last = row - 1;
                 int position = -1;
@@ -133,8 +133,9 @@ namespace DataStructureWiki
                 while (first <= last)
                 {
                     int middle = (first + last) / 2;
+                    string compare = DataTable[middle, 0].ToLower();
                     // If target is found
-                    if (String.CompareOrdinal(DataTable[middle, 0],target) == 0)
+                    if (compare.CompareTo(target) == 0)
                     {
                         // Change position and highlight the entry
                         position = middle;
@@ -149,11 +150,11 @@ namespace DataStructureWiki
                         break;
                     }
                     // Change the middle if entry is higher or lower than the current position
-                    else if (String.CompareOrdinal(DataTable[middle, 0], target) < 0)
+                    else if (String.CompareOrdinal(compare, target) < 0)
                     {
                         first = middle + 1;
                     }
-                    else if (String.CompareOrdinal(DataTable[middle, 0], target) > 0)
+                    else if (String.CompareOrdinal(compare, target) > 0)
                     {
                         last = middle - 1;
                     }
@@ -335,6 +336,8 @@ namespace DataStructureWiki
         // Saves a table into a binary file
         private void SaveData()
         {
+            BubbleSort();
+            DisplayData();
             // File dialog config
             SaveFileDialog sfd = new SaveFileDialog()
             {
